@@ -5,8 +5,9 @@ import calculateAvgRating from "../utils/avgRating";
 
 import "./tour-card.css";
 
-const TourCard = ({ tour }) => {
-  const { _id, title, city, photo, price, featured, reviews } = tour;
+const GuideCard = ({ guide }) => {
+  const { _id, name, age, email, price, featured, reviews } = guide;
+  // console.log(photo);
 
   const { totalRating, avgRating } = calculateAvgRating(reviews);
 
@@ -14,14 +15,14 @@ const TourCard = ({ tour }) => {
     <div className="tour_card mt-4">
       <Card>
         <div className="tour_img">
-          <img src={photo} alt="tour-img" />
+          <img src="/guide-images/tour-guide.jpg" alt="tour-img" />
           {featured && <span>Featured</span>}
         </div>
 
         <CardBody>
           <div className="card_top d-flex align-items-center justify-content-between">
             <span className="tour_location d-flex align-items-center gap-1">
-              <i className="ri-map-pin-line"></i> {city}
+              <i className="ri-map-pin-line"></i> {age}
             </span>
             <span className="tour_rating d-flex align-items-center gap-1">
               <i className="ri-star-s-fill"></i>{" "}
@@ -35,12 +36,12 @@ const TourCard = ({ tour }) => {
           </div>
 
           <h5 className="tour_title">
-            <Link to={`/tours/${_id}`}>{title}</Link>
+            <Link to={`/tours/${_id}`}>{name}</Link>
           </h5>
 
           <div className="card_bottom d-flex align-items-center justify-content-between mt-3">
             <h5>
-              ${price} <span>/per person/</span>
+              ${price} <span>/per hour</span>
             </h5>
             <button className="btn booking_btn">
               <Link to={`/tours/${_id}`}>Book Now</Link>
@@ -52,4 +53,4 @@ const TourCard = ({ tour }) => {
   );
 };
 
-export default TourCard;
+export default GuideCard;
