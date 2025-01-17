@@ -89,6 +89,10 @@
 .booking_btn:hover {
   color: #000 !important;
 }
+.guide{
+  width: 100px;
+  height: 300px;
+}
 
 @media only screen and (max-width: 576px) {
   .tour_title {
@@ -103,5 +107,5 @@
   .tour_location,
   .tour_rating {
     font-size: 0.8rem;
-  }
+  }  
 }

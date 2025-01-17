@@ -55,7 +55,7 @@ const Guides = () => {
               <Col lg="12">
                 <div
                   className="pagination d-flex align-items-center
-              justify-content-center mt-4 gap-3"
+                    justify-content-center mt-4 gap-3"
                 >
                   {[...Array(pageCount).keys()].map((number) => (
                     <span

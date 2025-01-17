@@ -6,7 +6,7 @@ import calculateAvgRating from "../utils/avgRating";
 import "./tour-card.css";
 
 const GuideCard = ({ guide }) => {
-  const { _id, name, age, email, price, featured, reviews } = guide;
+  const { _id, name, age, photo, email, price, reviews } = guide;
   // console.log(photo);
 
   const { totalRating, avgRating } = calculateAvgRating(reviews);
@@ -15,14 +15,13 @@ const GuideCard = ({ guide }) => {
     <div className="tour_card mt-4">
       <Card>
         <div className="tour_img">
-          <img src="/guide-images/tour-guide.jpg" alt="tour-img" />
-          {featured && <span>Featured</span>}
+          <img src={photo} alt="guide-img" className="guide" />
         </div>
 
         <CardBody>
           <div className="card_top d-flex align-items-center justify-content-between">
             <span className="tour_location d-flex align-items-center gap-1">
-              <i className="ri-map-pin-line"></i> {age}
+               {age}
             </span>
             <span className="tour_rating d-flex align-items-center gap-1">
               <i className="ri-star-s-fill"></i>{" "}
