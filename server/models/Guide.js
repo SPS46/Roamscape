@@ -27,6 +27,10 @@ const guideSchema = new mongoose.Schema(
       type: [String],
       required: true,
     },
+    price: {
+      type: Number,
+      required: true,
+    },
     experience: {
       type: Number,
       required: true,

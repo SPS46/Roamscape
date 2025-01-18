@@ -20,7 +20,7 @@ const Guides = () => {
     error,
   } = useFetch(`${BASE_URL}/guides?page=${page}`);
   const { data: guideCount } = useFetch(
-    `${BASE_URL}/guides/search/getTourCount`
+    `${BASE_URL}/guides/search/getGuideCount`
   );
 
   useEffect(() => {
