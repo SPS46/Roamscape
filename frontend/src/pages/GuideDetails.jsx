@@ -1,39 +1,38 @@
 import React, { useEffect, useRef, useState, useContext } from "react";
-import "../styles/tour-details.css";
+import "../styles/guide-details.css";
 import { Container, Row, Col, Form, ListGroup } from "reactstrap";
 import { useParams } from "react-router-dom";
 import calculateAvgRating from "./../utils/avgRating";
 import avatar from "../assets/images/avatar.jpg";
-import Booking from "../components/Booking/Booking";
+import GuideBooking from "../components/Booking/Guide-Booking";
 import Newsletter from "../shared/Newsletter";
 import useFetch from "./../hooks/useFetch";
 import { BASE_URL } from "./../utils/config";
-import Subtitle from "./../shared/Subtitle";
 
 import { AuthContext } from "./../context/AuthContext";
-import FeaturedGuidesList from "../components/Featured-guides/FeaturedGuideList";
 
-const TourDetails = () => {
+const GuideDetails = () => {
   const { id } = useParams();
   const reviewMsgRef = useRef("");
-  const [tourRating, setTourRating] = useState(null);
+  const [guideRating, setGuideRating] = useState(null);
   const { user } = useContext(AuthContext);
 
   //Fetch Data from database
-  const { data: tour, loading, error } = useFetch(`${BASE_URL}/tours/${id}`);
+  const { data: guide, loading, error } = useFetch(`${BASE_URL}/guides/${id}`);
 
-  //Destructure properties from tour object
+  //Destructure properties from guide object
   const {
     photo,
-    title,
-    desc,
-    price,
-    address,
+    name,
+    bio,
+    phone,
+    email,
     reviews,
-    city,
-    distance,
-    maxGroupSize,
-  } = tour;
+    experience,
+    languages,
+    tours,
+    price,
+  } = guide;
 
   const { totalRating, avgRating } = calculateAvgRating(reviews);
 
@@ -53,7 +52,7 @@ const TourDetails = () => {
       const reviewObj = {
         username: user?.username,
         reviewText,
-        rating: tourRating,
+        rating: guideRating,
       };
 
       const res = await fetch(`${BASE_URL}/review/${id}`, {
@@ -78,7 +77,7 @@ const TourDetails = () => {
 
   useEffect(() => {
     window.scrollTo(0, 0);
-  }, [tour]);
+  }, [guide]);
 
   return (
     <>
@@ -89,14 +88,14 @@ const TourDetails = () => {
           {!loading && !error && (
             <Row>
               <Col lg="8">
-                <div className="tour__content">
+                <div className="guide__content">
                   <img src={photo} alt="" />
 
-                  <div className="tour__info">
-                    <h2>{title}</h2>
+                  <div className="guide__info">
+                    <h2>{name}</h2>
 
                     <div className="d-flex align-items-center gap-5">
-                      <span className="tour_rating d-flex align-items-center gap-1">
+                      <span className="guide_rating d-flex align-items-center gap-1">
                         <i
                           className="ri-star-s-fill"
                           style={{ color: "var(--secondary-color)" }}
@@ -111,52 +110,43 @@ const TourDetails = () => {
 
                       <span>
                         <i className="ri-map-pin-user-fill"></i>
-                        {address}
+                        {email}
                       </span>
                     </div>
 
-                    <div className="tour__extra-details">
+                    <div className="guide__extra-details">
                       <span>
-                        <i className="ri-map-pin-2-line"></i>
-                        {city}
+                        <i className="ri-phone-line"></i>
+                        {phone}
                       </span>
                       <span>
                         <i className="ri-money-dollar-circle-line"></i>${price}
-                        /per person
-                      </span>
-                      <span>
-                        <i className="ri-map-pin-time-line"></i>
-                        {distance}
-                        km
-                      </span>
-                      <span>
-                        <i className="ri-group-line"></i>
-                        {maxGroupSize} people
+                        /per day
                       </span>
                     </div>
                     <h5>Description</h5>
-                    <p>{desc}</p>
+                    <p>{bio}</p>
                   </div>
 
-                  {/*============Tour Reviews Section===============*/}
-                  <div className="tour__reviews mt-4">
+                  {/*============guide Reviews Section===============*/}
+                  <div className="guide__reviews mt-4">
                     <h4>Reviews ({reviews?.length} reviews)</h4>
 
                     <Form onSubmit={submitHandler}>
                       <div className="d-flex align-items-center gap-3 mb-4 rating__group">
-                        <span onClick={() => setTourRating(1)}>
+                        <span onClick={() => setGuideRating(1)}>
                           <i className="ri-star-s-fill"></i>
                         </span>
-                        <span onClick={() => setTourRating(2)}>
+                        <span onClick={() => setGuideRating(2)}>
                           <i className="ri-star-s-fill"></i>
                         </span>
-                        <span onClick={() => setTourRating(3)}>
+                        <span onClick={() => setGuideRating(3)}>
                           <i className="ri-star-s-fill"></i>
                         </span>
-                        <span onClick={() => setTourRating(4)}>
+                        <span onClick={() => setGuideRating(4)}>
                           <i className="ri-star-s-fill"></i>
                         </span>
-                        <span onClick={() => setTourRating(5)}>
+                        <span onClick={() => setGuideRating(5)}>
                           <i className="ri-star-s-fill"></i>
                         </span>
                       </div>
@@ -207,30 +197,20 @@ const TourDetails = () => {
                       ))}
                     </ListGroup>
                   </div>
-                  {/*============Tour Reviews Section End===============*/}
+                  {/*============Guide Reviews Section End===============*/}
                 </div>
               </Col>
 
               <Col lg="4">
-                <Booking tour={tour} avgRating={avgRating} />
+                <GuideBooking guide={guide} avgRating={avgRating} />
               </Col>
             </Row>
           )}
         </Container>
-      </section>
-
-      <section className="px-5">
-        <Row>
-          <Col md="12">
-            <Subtitle subtitle={"Explore"} />
-            <h2 className="featured_tour-title">Our featured guides</h2>
-          </Col>
-          <FeaturedGuidesList />
-        </Row>
       </section>
       <Newsletter />
     </>
   );
 };
 
-export default TourDetails;
+export default GuideDetails;

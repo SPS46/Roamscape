@@ -47,6 +47,10 @@ const guideSchema = new mongoose.Schema(
         ref: "Review",
       },
     ],
+    featured: {
+      type: Boolean,
+      default: false,
+    },
   },
   { timestamps: true }
 );
