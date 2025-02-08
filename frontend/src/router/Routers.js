@@ -11,6 +11,8 @@ import ThankYou from "../pages/ThankYou";
 import Guides from "../pages/Guides";
 import Rentals from "../pages/Rentals";
 import GuideThankYou from "../pages/GuideThankYou";
+import RentalDetails from "../pages/RentalDetails";
+import RentalThankYou from "../pages/RentalThankYou";
 
 const Router = () => {
   return (
@@ -22,10 +24,12 @@ const Router = () => {
       <Route path="/rentals" element={<Rentals />} />
       <Route path="/guides/:id" element={<GuideDetails />} />
       <Route path="/tours/:id" element={<TourDetails />} />
+      <Route path="/rental/:id" element={<RentalDetails />} />
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
       <Route path="/thank-you" element={<ThankYou />} />
       <Route path="/guide-thank-you" element={<GuideThankYou />} />
+      <Route path="/rental-thank-you" element={<RentalThankYou />} />
       <Route path="/tours/search" element={<SearchResultList />} />
     </Routes>
   );

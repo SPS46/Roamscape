@@ -4,7 +4,7 @@
   right: 0;
   left: 0;
   z-index: 100;
-  max-width: 60%;
+  max-width: 75%;
   margin: 10px auto;
   padding: 0.4rem 2rem;
   border-radius: 50px;
@@ -73,11 +73,10 @@
   align-items: center;
   gap: 0.4rem;
   background: #254d3b;
-  padding-inline: 1.2rem;
+  padding-inline: 1rem;
   color: #fff;
   cursor: pointer;
-  border-bottom-right-radius: 1.2rem;
-  border-bottom-left-radius: 1.2rem;
+  text-wrap: wrap;
 }
 
 /*Responsive CSS*/

@@ -12,6 +12,7 @@ import bookingRoute from "./routes/bookings.js";
 import guidingRoute from "./routes/guides.js";
 import rentalRoute from "./routes/rental.js";
 import guideBookingRoute from "./routes/guideBookings.js";
+import rentalBookingRoute from "./routes/rentalBookings.js";
 
 dotenv.config();
 const app = express();
@@ -42,6 +43,7 @@ app.use("/api/v1/users", userRoute);
 app.use("/api/v1/review", reviewRoute);
 app.use("/api/v1/booking", bookingRoute);
 app.use("/api/v1/guide-booking", guideBookingRoute);
+app.use("/api/v1/rental-booking", rentalBookingRoute);
 app.use("/api/v1/guides", guidingRoute);
 app.use("/api/v1/rental", rentalRoute);
 
