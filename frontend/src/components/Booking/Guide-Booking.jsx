@@ -1,7 +1,6 @@
 import React, { useContext, useState } from "react";
 import "./booking.css";
 import { Form, FormGroup, ListGroup, ListGroupItem, Button } from "reactstrap";
-
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../../context/AuthContext";
 import { BASE_URL } from "../../utils/config";
@@ -9,17 +8,19 @@ import { BASE_URL } from "../../utils/config";
 const GuideBooking = ({ guide, avgRating }) => {
   const { price, reviews, name } = guide;
   const navigate = useNavigate();
-
   const { user } = useContext(AuthContext);
 
   const [booking, setBooking] = useState({
-    userId: user && user._id,
-    userEmail: user && user.email,
+    userId: user?._id || "",
+    userEmail: user?.email || "",
+    guideId: guide?._id || "",
     guideName: name,
     fullName: "",
     phone: "",
+    languages: guide?.languages || [],
     guestSize: 1,
-    bookAt: "",
+    bookingDate: "",
+    price: price,
   });
 
   const handleChange = (e) => {
@@ -27,25 +28,19 @@ const GuideBooking = ({ guide, avgRating }) => {
   };
 
   const serviceFee = 10;
-  const totalAmount =
-    Number(price) * Number(booking.guestSize) + Number(serviceFee);
+  const totalAmount = Number(price) * Number(booking.guestSize) + serviceFee;
 
-  //Send Data to the server
   const handleClick = async (e) => {
     e.preventDefault();
 
-    console.log(booking);
+    if (!user) {
+      return navigate(`/login`);
+    }
 
     try {
-      if (!user || user === undefined || user === null) {
-        return navigate(`/login`);
-      }
-
-      const res = await fetch(`${BASE_URL}/booking`, {
-        method: "post",
-        headers: {
-          "content-type": "application/json",
-        },
+      const res = await fetch(`${BASE_URL}/guide-booking/`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
         credentials: "include",
         body: JSON.stringify(booking),
       });
@@ -55,7 +50,7 @@ const GuideBooking = ({ guide, avgRating }) => {
       if (!res.ok) {
         return alert(result.message);
       }
-      navigate("/thank-you");
+      navigate("/guide-thank-you");
     } catch (err) {
       alert(err.message);
     }
@@ -69,13 +64,13 @@ const GuideBooking = ({ guide, avgRating }) => {
         </h3>
         <span className="tour_rating d-flex align-items-center">
           <i className="ri-star-s-fill"></i>
-          {avgRating === 0 ? null : avgRating} ({reviews?.length})
+          {avgRating || "No rating"} ({reviews?.length || 0})
         </span>
       </div>
 
-      {/* =================== Boooking Form =================== */}
+      {/* Booking Form */}
       <div className="booking__form">
-        <h5>Information</h5>
+        <h5>Guide Booking Information</h5>
         <Form className="booking__info-form" onSubmit={handleClick}>
           <FormGroup>
             <input
@@ -98,34 +93,34 @@ const GuideBooking = ({ guide, avgRating }) => {
           <FormGroup className="d-flex align-items-center gap-3">
             <input
               type="date"
-              placeholder=""
-              id="bookAt"
+              id="bookingDate"
               required
               onChange={handleChange}
             />
             <input
               type="number"
-              placeholder="Guest"
+              placeholder="Number of Guests"
               id="guestSize"
+              min="1"
               required
               onChange={handleChange}
             />
           </FormGroup>
         </Form>
       </div>
-      {/* =================== Boooking From End =================== */}
 
-      {/* =================== Boooking Bottom =================== */}
+      {/* Booking Summary */}
       <div className="booking__bottom">
         <ListGroup>
           <ListGroupItem className="border-0 px-0">
-            <h5 className="d-flex align-items-center gap-1">
-              ${price} <i className="ri-close-line"></i> 1 person
+            <h5>
+              ${price} <i className="ri-close-line"></i> {booking.guestSize}{" "}
+              guest(s)
             </h5>
-            <span>${price}</span>
+            <span>${Number(price) * Number(booking.guestSize)}</span>
           </ListGroupItem>
           <ListGroupItem className="border-0 px-0">
-            <h5>Service charge</h5>
+            <h5>Service Charge</h5>
             <span>${serviceFee}</span>
           </ListGroupItem>
           <ListGroupItem className="border-0 px-0">
@@ -135,7 +130,7 @@ const GuideBooking = ({ guide, avgRating }) => {
         </ListGroup>
 
         <Button className="btn primary_btn w-100 mt-4" onClick={handleClick}>
-          Book Now
+          Book Guide
         </Button>
       </div>
     </div>

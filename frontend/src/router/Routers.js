@@ -10,6 +10,7 @@ import SearchResultList from "../pages/SearchResultList";
 import ThankYou from "../pages/ThankYou";
 import Guides from "../pages/Guides";
 import Rentals from "../pages/Rentals";
+import GuideThankYou from "../pages/GuideThankYou";
 
 const Router = () => {
   return (
@@ -24,6 +25,7 @@ const Router = () => {
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
       <Route path="/thank-you" element={<ThankYou />} />
+      <Route path="/guide-thank-you" element={<GuideThankYou />} />
       <Route path="/tours/search" element={<SearchResultList />} />
     </Routes>
   );

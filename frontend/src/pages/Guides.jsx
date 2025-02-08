@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import CommonSection from "../shared/CommonSection";
 
 import "../styles/tour.css";
-import SearchBar from "./../shared/SearchBar";
 import Newsletter from "./../shared/Newsletter";
 import { Row, Container, Col } from "reactstrap";
 
@@ -32,13 +31,6 @@ const Guides = () => {
   return (
     <>
       <CommonSection title={"All Guides"} />
-      <section>
-        <Container>
-          <Row>
-            <SearchBar />
-          </Row>
-        </Container>
-      </section>
       <section className="pt-0">
         <Container>
           {loading && <h4 className="text-center pt-5">Loading .....</h4>}

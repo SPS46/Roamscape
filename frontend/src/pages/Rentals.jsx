@@ -2,46 +2,45 @@ import React, { useState, useEffect } from "react";
 import CommonSection from "../shared/CommonSection";
 
 import "../styles/tour.css";
-import SearchBar from "./../shared/SearchBar";
 import Newsletter from "./../shared/Newsletter";
 import { Row, Container, Col } from "reactstrap";
 
 import useFetch from "../hooks/useFetch";
 import { BASE_URL } from "../utils/config";
-import GuideCard from "../shared/GuideCard";
+import RentalCard from "../shared/RentalCard";
 
 const Rentals = () => {
   const [pageCount, setPageCount] = useState(0);
   const [page, setPage] = useState(0);
 
   const {
-    data: guides,
+    data: rentals,
     loading,
     error,
-  } = useFetch(`${BASE_URL}/guides?page=${page}`);
-  const { data: guideCount } = useFetch(
-    `${BASE_URL}/guides/search/getGuideCount`
+  } = useFetch(`${BASE_URL}/rental?page=${page}`);
+  const { data: rentalCount } = useFetch(
+    `${BASE_URL}/rental/search/getRentalCount`
   );
 
   useEffect(() => {
-    const pages = Math.ceil(guideCount / 8);
+    const pages = Math.ceil(rentalCount / 8);
     setPageCount(pages);
     window.scrollTo(0, 0);
-  }, [page, guideCount, guides]);
+  }, [page, rentalCount, rentals]);
 
   return (
     <>
-      <CommonSection title={"All Guides"} />
+      <CommonSection title={"All Rentals"} />
       <section className="pt-0">
         <Container>
           {loading && <h4 className="text-center pt-5">Loading .....</h4>}
           {error && <h4 className="text-center pt-5">{error}</h4>}
           {!loading && !error && (
             <Row>
-              {guides?.map((guide) => (
-                <Col lg="3" md="6" sm="6" key={guide._id}>
+              {rentals?.map((rental) => (
+                <Col lg="3" md="6" sm="6" key={rental._id}>
                   {" "}
-                  <GuideCard guide={guide} />
+                  <RentalCard rental={rental} />
                 </Col>
               ))}
 
